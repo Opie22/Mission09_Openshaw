@@ -1,8 +1,7 @@
 
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
 import './App.css'
-import teamsData from '/Users/dallenopenshaw/Library/Mobile Documents/com~apple~CloudDocs/Winter 2025/IS 413/Mission_09_DallenOpenshaw/frontend/src/CollegeBasketballTeams.json'
+import teamsData from './CollegeBasketballTeams.json'
+import React, { useState, useEffect } from 'react';
 
 interface Team {
   tid: number;
@@ -27,25 +26,28 @@ export const getTeamsFromLocalFile = (): Team[] => {
 };
 
 function App() {
- 
+  const [teams, setTeams] = useState<Team[]>([]);
+
+  // Example using local JSON:
+  useEffect(() => {
+    const localTeams = getTeamsFromLocalFile();
+    setTeams(localTeams);
+  }, []);
+
+
 
   return (
-    <>
-      <div>
-        <a href="https://vite.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>March Madness</h1>
-      <div>
-        
-      </div>
-      
-    </>
-  )
+    <div>
+      <h1>March Madness Teams</h1>
+      <ul>
+        {teams.map((team) => (
+          <li key={team.tid}>
+            {team.school} {team.name} ({team.abbrev}) - {team.city}, {team.state}
+          </li>
+        ))}
+      </ul>
+    </div>
+  );
 }
 
-export default App
+export default App;
