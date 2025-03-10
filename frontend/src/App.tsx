@@ -1,5 +1,6 @@
 
 import './App.css'
+import TeamCard from './TeamCard'; // Import the TeamCard component
 import teamsData from './CollegeBasketballTeams.json'
 import React, { useState, useEffect } from 'react';
 
@@ -25,7 +26,13 @@ export const getTeamsFromLocalFile = (): Team[] => {
   return (teamsData as TeamsData).teams;
 };
 
-function App() {
+function Welcome(){
+  
+  return(<h1>March Madness Teams</h1>)
+
+}
+
+function TeamList(){
   const [teams, setTeams] = useState<Team[]>([]);
 
   // Example using local JSON:
@@ -38,16 +45,29 @@ function App() {
 
   return (
     <div>
-      <h1>March Madness Teams</h1>
-      <ul>
+      <div style={{ display: 'flex', flexWrap: 'wrap',  justifyContent: 'center' }}>
         {teams.map((team) => (
-          <li key={team.tid}>
-            {team.school} {team.name} ({team.abbrev}) - {team.city}, {team.state}
-          </li>
+          <TeamCard
+            key={team.tid}
+            school={team.school}
+            name={team.name}
+            city={team.city}
+            state={team.state}
+          />
         ))}
-      </ul>
+      </div>
     </div>
   );
+}
+
+function App() {
+  return (
+    <>
+      <Welcome />
+      <TeamList />
+  
+    </>
+  )
 }
 
 export default App;
